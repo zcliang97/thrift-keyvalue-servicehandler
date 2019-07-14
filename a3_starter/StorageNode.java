@@ -16,22 +16,9 @@ import org.apache.curator.utils.*;
 import org.apache.log4j.*;
 
 public class StorageNode {
-    static Logger log;
-		
-	public static boolean isPrimary(String nodeData, String zkNode, CuratorFramework curClient){
-		while (true) {
-			curClient.sync();
-			List<String> children = curClient.getChildren().forPath(zkNode);
-			if (children.size() == 0) {
-				log.error("No primary found");
-				Thread.sleep(100);
-				continue;
-			}
-			Collections.sort(children);
-			byte[] data = curClient.getData().forPath(zkNode + "/" + children.get(0));
-			return nodeData.equals(String(data));
-		}
-	}
+	static Logger log;
+	static boolean isPrimary;
+	
     public static void main(String [] args) throws Exception {
 		BasicConfigurator.configure();
 		log = Logger.getLogger(StorageNode.class.getName());
@@ -75,13 +62,8 @@ public class StorageNode {
 		// TODO: create an ephemeral node in ZooKeeper
 		String host = args[0];
 		String port = args[1];
-		String zkConnectionString = args[2];
 		String zkNode = args[3];
 		String data = host + ":" + port;
-		curClient.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(zkNode, data);
-		
-		if (isPrimary(data, zkNode, curClient)){
-			// implement concurrency control
-		}
+		curClient.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(zkNode, data.getBytes());
 	}
 }
