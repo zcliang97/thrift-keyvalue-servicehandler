@@ -13,6 +13,10 @@ public class KeyValueService {
 
     public void put(java.lang.String key, java.lang.String value) throws org.apache.thrift.TException;
 
+    public void propagateToBackup(java.lang.String key, MapEntry me) throws org.apache.thrift.TException;
+
+    public void dumpToBackup(java.util.Map<java.lang.String,MapEntry> myMap) throws org.apache.thrift.TException;
+
   }
 
   public interface AsyncIface {
@@ -20,6 +24,10 @@ public class KeyValueService {
     public void get(java.lang.String key, org.apache.thrift.async.AsyncMethodCallback<java.lang.String> resultHandler) throws org.apache.thrift.TException;
 
     public void put(java.lang.String key, java.lang.String value, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
+
+    public void propagateToBackup(java.lang.String key, MapEntry me, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
+
+    public void dumpToBackup(java.util.Map<java.lang.String,MapEntry> myMap, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -84,6 +92,47 @@ public class KeyValueService {
     {
       put_result result = new put_result();
       receiveBase(result, "put");
+      return;
+    }
+
+    public void propagateToBackup(java.lang.String key, MapEntry me) throws org.apache.thrift.TException
+    {
+      send_propagateToBackup(key, me);
+      recv_propagateToBackup();
+    }
+
+    public void send_propagateToBackup(java.lang.String key, MapEntry me) throws org.apache.thrift.TException
+    {
+      propagateToBackup_args args = new propagateToBackup_args();
+      args.setKey(key);
+      args.setMe(me);
+      sendBase("propagateToBackup", args);
+    }
+
+    public void recv_propagateToBackup() throws org.apache.thrift.TException
+    {
+      propagateToBackup_result result = new propagateToBackup_result();
+      receiveBase(result, "propagateToBackup");
+      return;
+    }
+
+    public void dumpToBackup(java.util.Map<java.lang.String,MapEntry> myMap) throws org.apache.thrift.TException
+    {
+      send_dumpToBackup(myMap);
+      recv_dumpToBackup();
+    }
+
+    public void send_dumpToBackup(java.util.Map<java.lang.String,MapEntry> myMap) throws org.apache.thrift.TException
+    {
+      dumpToBackup_args args = new dumpToBackup_args();
+      args.setMyMap(myMap);
+      sendBase("dumpToBackup", args);
+    }
+
+    public void recv_dumpToBackup() throws org.apache.thrift.TException
+    {
+      dumpToBackup_result result = new dumpToBackup_result();
+      receiveBase(result, "dumpToBackup");
       return;
     }
 
@@ -172,6 +221,73 @@ public class KeyValueService {
       }
     }
 
+    public void propagateToBackup(java.lang.String key, MapEntry me, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      propagateToBackup_call method_call = new propagateToBackup_call(key, me, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class propagateToBackup_call extends org.apache.thrift.async.TAsyncMethodCall<Void> {
+      private java.lang.String key;
+      private MapEntry me;
+      public propagateToBackup_call(java.lang.String key, MapEntry me, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.key = key;
+        this.me = me;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("propagateToBackup", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        propagateToBackup_args args = new propagateToBackup_args();
+        args.setKey(key);
+        args.setMe(me);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Void getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new java.lang.IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return null;
+      }
+    }
+
+    public void dumpToBackup(java.util.Map<java.lang.String,MapEntry> myMap, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      dumpToBackup_call method_call = new dumpToBackup_call(myMap, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class dumpToBackup_call extends org.apache.thrift.async.TAsyncMethodCall<Void> {
+      private java.util.Map<java.lang.String,MapEntry> myMap;
+      public dumpToBackup_call(java.util.Map<java.lang.String,MapEntry> myMap, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.myMap = myMap;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("dumpToBackup", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        dumpToBackup_args args = new dumpToBackup_args();
+        args.setMyMap(myMap);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Void getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new java.lang.IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return null;
+      }
+    }
+
   }
 
   public static class Processor<I extends Iface> extends org.apache.thrift.TBaseProcessor<I> implements org.apache.thrift.TProcessor {
@@ -187,6 +303,8 @@ public class KeyValueService {
     private static <I extends Iface> java.util.Map<java.lang.String,  org.apache.thrift.ProcessFunction<I, ? extends org.apache.thrift.TBase>> getProcessMap(java.util.Map<java.lang.String, org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
       processMap.put("get", new get());
       processMap.put("put", new put());
+      processMap.put("propagateToBackup", new propagateToBackup());
+      processMap.put("dumpToBackup", new dumpToBackup());
       return processMap;
     }
 
@@ -240,6 +358,56 @@ public class KeyValueService {
       }
     }
 
+    public static class propagateToBackup<I extends Iface> extends org.apache.thrift.ProcessFunction<I, propagateToBackup_args> {
+      public propagateToBackup() {
+        super("propagateToBackup");
+      }
+
+      public propagateToBackup_args getEmptyArgsInstance() {
+        return new propagateToBackup_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      @Override
+      protected boolean rethrowUnhandledExceptions() {
+        return false;
+      }
+
+      public propagateToBackup_result getResult(I iface, propagateToBackup_args args) throws org.apache.thrift.TException {
+        propagateToBackup_result result = new propagateToBackup_result();
+        iface.propagateToBackup(args.key, args.me);
+        return result;
+      }
+    }
+
+    public static class dumpToBackup<I extends Iface> extends org.apache.thrift.ProcessFunction<I, dumpToBackup_args> {
+      public dumpToBackup() {
+        super("dumpToBackup");
+      }
+
+      public dumpToBackup_args getEmptyArgsInstance() {
+        return new dumpToBackup_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      @Override
+      protected boolean rethrowUnhandledExceptions() {
+        return false;
+      }
+
+      public dumpToBackup_result getResult(I iface, dumpToBackup_args args) throws org.apache.thrift.TException {
+        dumpToBackup_result result = new dumpToBackup_result();
+        iface.dumpToBackup(args.myMap);
+        return result;
+      }
+    }
+
   }
 
   public static class AsyncProcessor<I extends AsyncIface> extends org.apache.thrift.TBaseAsyncProcessor<I> {
@@ -255,6 +423,8 @@ public class KeyValueService {
     private static <I extends AsyncIface> java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
       processMap.put("get", new get());
       processMap.put("put", new put());
+      processMap.put("propagateToBackup", new propagateToBackup());
+      processMap.put("dumpToBackup", new dumpToBackup());
       return processMap;
     }
 
@@ -376,6 +546,126 @@ public class KeyValueService {
 
       public void start(I iface, put_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
         iface.put(args.key, args.value,resultHandler);
+      }
+    }
+
+    public static class propagateToBackup<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, propagateToBackup_args, Void> {
+      public propagateToBackup() {
+        super("propagateToBackup");
+      }
+
+      public propagateToBackup_args getEmptyArgsInstance() {
+        return new propagateToBackup_args();
+      }
+
+      public org.apache.thrift.async.AsyncMethodCallback<Void> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new org.apache.thrift.async.AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            propagateToBackup_result result = new propagateToBackup_result();
+            try {
+              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+            } catch (org.apache.thrift.transport.TTransportException e) {
+              _LOGGER.error("TTransportException writing to internal frame buffer", e);
+              fb.close();
+            } catch (java.lang.Exception e) {
+              _LOGGER.error("Exception writing to internal frame buffer", e);
+              onError(e);
+            }
+          }
+          public void onError(java.lang.Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TSerializable msg;
+            propagateToBackup_result result = new propagateToBackup_result();
+            if (e instanceof org.apache.thrift.transport.TTransportException) {
+              _LOGGER.error("TTransportException inside handler", e);
+              fb.close();
+              return;
+            } else if (e instanceof org.apache.thrift.TApplicationException) {
+              _LOGGER.error("TApplicationException inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TApplicationException)e;
+            } else {
+              _LOGGER.error("Exception inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+            } catch (java.lang.Exception ex) {
+              _LOGGER.error("Exception writing to internal frame buffer", ex);
+              fb.close();
+            }
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, propagateToBackup_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+        iface.propagateToBackup(args.key, args.me,resultHandler);
+      }
+    }
+
+    public static class dumpToBackup<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, dumpToBackup_args, Void> {
+      public dumpToBackup() {
+        super("dumpToBackup");
+      }
+
+      public dumpToBackup_args getEmptyArgsInstance() {
+        return new dumpToBackup_args();
+      }
+
+      public org.apache.thrift.async.AsyncMethodCallback<Void> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new org.apache.thrift.async.AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            dumpToBackup_result result = new dumpToBackup_result();
+            try {
+              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+            } catch (org.apache.thrift.transport.TTransportException e) {
+              _LOGGER.error("TTransportException writing to internal frame buffer", e);
+              fb.close();
+            } catch (java.lang.Exception e) {
+              _LOGGER.error("Exception writing to internal frame buffer", e);
+              onError(e);
+            }
+          }
+          public void onError(java.lang.Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TSerializable msg;
+            dumpToBackup_result result = new dumpToBackup_result();
+            if (e instanceof org.apache.thrift.transport.TTransportException) {
+              _LOGGER.error("TTransportException inside handler", e);
+              fb.close();
+              return;
+            } else if (e instanceof org.apache.thrift.TApplicationException) {
+              _LOGGER.error("TApplicationException inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TApplicationException)e;
+            } else {
+              _LOGGER.error("Exception inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+            } catch (java.lang.Exception ex) {
+              _LOGGER.error("Exception writing to internal frame buffer", ex);
+              fb.close();
+            }
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, dumpToBackup_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+        iface.dumpToBackup(args.myMap,resultHandler);
       }
     }
 
@@ -1832,6 +2122,1423 @@ public class KeyValueService {
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, put_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class propagateToBackup_args implements org.apache.thrift.TBase<propagateToBackup_args, propagateToBackup_args._Fields>, java.io.Serializable, Cloneable, Comparable<propagateToBackup_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("propagateToBackup_args");
+
+    private static final org.apache.thrift.protocol.TField KEY_FIELD_DESC = new org.apache.thrift.protocol.TField("key", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField ME_FIELD_DESC = new org.apache.thrift.protocol.TField("me", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new propagateToBackup_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new propagateToBackup_argsTupleSchemeFactory();
+
+    public @org.apache.thrift.annotation.Nullable java.lang.String key; // required
+    public @org.apache.thrift.annotation.Nullable MapEntry me; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      KEY((short)1, "key"),
+      ME((short)2, "me");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // KEY
+            return KEY;
+          case 2: // ME
+            return ME;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.KEY, new org.apache.thrift.meta_data.FieldMetaData("key", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.ME, new org.apache.thrift.meta_data.FieldMetaData("me", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, MapEntry.class)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(propagateToBackup_args.class, metaDataMap);
+    }
+
+    public propagateToBackup_args() {
+    }
+
+    public propagateToBackup_args(
+      java.lang.String key,
+      MapEntry me)
+    {
+      this();
+      this.key = key;
+      this.me = me;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public propagateToBackup_args(propagateToBackup_args other) {
+      if (other.isSetKey()) {
+        this.key = other.key;
+      }
+      if (other.isSetMe()) {
+        this.me = new MapEntry(other.me);
+      }
+    }
+
+    public propagateToBackup_args deepCopy() {
+      return new propagateToBackup_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.key = null;
+      this.me = null;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.String getKey() {
+      return this.key;
+    }
+
+    public propagateToBackup_args setKey(@org.apache.thrift.annotation.Nullable java.lang.String key) {
+      this.key = key;
+      return this;
+    }
+
+    public void unsetKey() {
+      this.key = null;
+    }
+
+    /** Returns true if field key is set (has been assigned a value) and false otherwise */
+    public boolean isSetKey() {
+      return this.key != null;
+    }
+
+    public void setKeyIsSet(boolean value) {
+      if (!value) {
+        this.key = null;
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public MapEntry getMe() {
+      return this.me;
+    }
+
+    public propagateToBackup_args setMe(@org.apache.thrift.annotation.Nullable MapEntry me) {
+      this.me = me;
+      return this;
+    }
+
+    public void unsetMe() {
+      this.me = null;
+    }
+
+    /** Returns true if field me is set (has been assigned a value) and false otherwise */
+    public boolean isSetMe() {
+      return this.me != null;
+    }
+
+    public void setMeIsSet(boolean value) {
+      if (!value) {
+        this.me = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      case KEY:
+        if (value == null) {
+          unsetKey();
+        } else {
+          setKey((java.lang.String)value);
+        }
+        break;
+
+      case ME:
+        if (value == null) {
+          unsetMe();
+        } else {
+          setMe((MapEntry)value);
+        }
+        break;
+
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case KEY:
+        return getKey();
+
+      case ME:
+        return getMe();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case KEY:
+        return isSetKey();
+      case ME:
+        return isSetMe();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof propagateToBackup_args)
+        return this.equals((propagateToBackup_args)that);
+      return false;
+    }
+
+    public boolean equals(propagateToBackup_args that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_key = true && this.isSetKey();
+      boolean that_present_key = true && that.isSetKey();
+      if (this_present_key || that_present_key) {
+        if (!(this_present_key && that_present_key))
+          return false;
+        if (!this.key.equals(that.key))
+          return false;
+      }
+
+      boolean this_present_me = true && this.isSetMe();
+      boolean that_present_me = true && that.isSetMe();
+      if (this_present_me || that_present_me) {
+        if (!(this_present_me && that_present_me))
+          return false;
+        if (!this.me.equals(that.me))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetKey()) ? 131071 : 524287);
+      if (isSetKey())
+        hashCode = hashCode * 8191 + key.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetMe()) ? 131071 : 524287);
+      if (isSetMe())
+        hashCode = hashCode * 8191 + me.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(propagateToBackup_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.valueOf(isSetKey()).compareTo(other.isSetKey());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetKey()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.key, other.key);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetMe()).compareTo(other.isSetMe());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetMe()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.me, other.me);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+    }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("propagateToBackup_args(");
+      boolean first = true;
+
+      sb.append("key:");
+      if (this.key == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.key);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("me:");
+      if (this.me == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.me);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (me != null) {
+        me.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class propagateToBackup_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public propagateToBackup_argsStandardScheme getScheme() {
+        return new propagateToBackup_argsStandardScheme();
+      }
+    }
+
+    private static class propagateToBackup_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<propagateToBackup_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, propagateToBackup_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // KEY
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.key = iprot.readString();
+                struct.setKeyIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // ME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.me = new MapEntry();
+                struct.me.read(iprot);
+                struct.setMeIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, propagateToBackup_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.key != null) {
+          oprot.writeFieldBegin(KEY_FIELD_DESC);
+          oprot.writeString(struct.key);
+          oprot.writeFieldEnd();
+        }
+        if (struct.me != null) {
+          oprot.writeFieldBegin(ME_FIELD_DESC);
+          struct.me.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class propagateToBackup_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public propagateToBackup_argsTupleScheme getScheme() {
+        return new propagateToBackup_argsTupleScheme();
+      }
+    }
+
+    private static class propagateToBackup_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<propagateToBackup_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, propagateToBackup_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetKey()) {
+          optionals.set(0);
+        }
+        if (struct.isSetMe()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetKey()) {
+          oprot.writeString(struct.key);
+        }
+        if (struct.isSetMe()) {
+          struct.me.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, propagateToBackup_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.key = iprot.readString();
+          struct.setKeyIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.me = new MapEntry();
+          struct.me.read(iprot);
+          struct.setMeIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class propagateToBackup_result implements org.apache.thrift.TBase<propagateToBackup_result, propagateToBackup_result._Fields>, java.io.Serializable, Cloneable, Comparable<propagateToBackup_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("propagateToBackup_result");
+
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new propagateToBackup_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new propagateToBackup_resultTupleSchemeFactory();
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(propagateToBackup_result.class, metaDataMap);
+    }
+
+    public propagateToBackup_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public propagateToBackup_result(propagateToBackup_result other) {
+    }
+
+    public propagateToBackup_result deepCopy() {
+      return new propagateToBackup_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof propagateToBackup_result)
+        return this.equals((propagateToBackup_result)that);
+      return false;
+    }
+
+    public boolean equals(propagateToBackup_result that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(propagateToBackup_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+      }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("propagateToBackup_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class propagateToBackup_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public propagateToBackup_resultStandardScheme getScheme() {
+        return new propagateToBackup_resultStandardScheme();
+      }
+    }
+
+    private static class propagateToBackup_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<propagateToBackup_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, propagateToBackup_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, propagateToBackup_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class propagateToBackup_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public propagateToBackup_resultTupleScheme getScheme() {
+        return new propagateToBackup_resultTupleScheme();
+      }
+    }
+
+    private static class propagateToBackup_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<propagateToBackup_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, propagateToBackup_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, propagateToBackup_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class dumpToBackup_args implements org.apache.thrift.TBase<dumpToBackup_args, dumpToBackup_args._Fields>, java.io.Serializable, Cloneable, Comparable<dumpToBackup_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("dumpToBackup_args");
+
+    private static final org.apache.thrift.protocol.TField MY_MAP_FIELD_DESC = new org.apache.thrift.protocol.TField("myMap", org.apache.thrift.protocol.TType.MAP, (short)1);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new dumpToBackup_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new dumpToBackup_argsTupleSchemeFactory();
+
+    public @org.apache.thrift.annotation.Nullable java.util.Map<java.lang.String,MapEntry> myMap; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      MY_MAP((short)1, "myMap");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // MY_MAP
+            return MY_MAP;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.MY_MAP, new org.apache.thrift.meta_data.FieldMetaData("myMap", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.MapMetaData(org.apache.thrift.protocol.TType.MAP, 
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING), 
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, MapEntry.class))));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(dumpToBackup_args.class, metaDataMap);
+    }
+
+    public dumpToBackup_args() {
+    }
+
+    public dumpToBackup_args(
+      java.util.Map<java.lang.String,MapEntry> myMap)
+    {
+      this();
+      this.myMap = myMap;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public dumpToBackup_args(dumpToBackup_args other) {
+      if (other.isSetMyMap()) {
+        java.util.Map<java.lang.String,MapEntry> __this__myMap = new java.util.HashMap<java.lang.String,MapEntry>(other.myMap.size());
+        for (java.util.Map.Entry<java.lang.String, MapEntry> other_element : other.myMap.entrySet()) {
+
+          java.lang.String other_element_key = other_element.getKey();
+          MapEntry other_element_value = other_element.getValue();
+
+          java.lang.String __this__myMap_copy_key = other_element_key;
+
+          MapEntry __this__myMap_copy_value = new MapEntry(other_element_value);
+
+          __this__myMap.put(__this__myMap_copy_key, __this__myMap_copy_value);
+        }
+        this.myMap = __this__myMap;
+      }
+    }
+
+    public dumpToBackup_args deepCopy() {
+      return new dumpToBackup_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.myMap = null;
+    }
+
+    public int getMyMapSize() {
+      return (this.myMap == null) ? 0 : this.myMap.size();
+    }
+
+    public void putToMyMap(java.lang.String key, MapEntry val) {
+      if (this.myMap == null) {
+        this.myMap = new java.util.HashMap<java.lang.String,MapEntry>();
+      }
+      this.myMap.put(key, val);
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.util.Map<java.lang.String,MapEntry> getMyMap() {
+      return this.myMap;
+    }
+
+    public dumpToBackup_args setMyMap(@org.apache.thrift.annotation.Nullable java.util.Map<java.lang.String,MapEntry> myMap) {
+      this.myMap = myMap;
+      return this;
+    }
+
+    public void unsetMyMap() {
+      this.myMap = null;
+    }
+
+    /** Returns true if field myMap is set (has been assigned a value) and false otherwise */
+    public boolean isSetMyMap() {
+      return this.myMap != null;
+    }
+
+    public void setMyMapIsSet(boolean value) {
+      if (!value) {
+        this.myMap = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      case MY_MAP:
+        if (value == null) {
+          unsetMyMap();
+        } else {
+          setMyMap((java.util.Map<java.lang.String,MapEntry>)value);
+        }
+        break;
+
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case MY_MAP:
+        return getMyMap();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case MY_MAP:
+        return isSetMyMap();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof dumpToBackup_args)
+        return this.equals((dumpToBackup_args)that);
+      return false;
+    }
+
+    public boolean equals(dumpToBackup_args that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_myMap = true && this.isSetMyMap();
+      boolean that_present_myMap = true && that.isSetMyMap();
+      if (this_present_myMap || that_present_myMap) {
+        if (!(this_present_myMap && that_present_myMap))
+          return false;
+        if (!this.myMap.equals(that.myMap))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetMyMap()) ? 131071 : 524287);
+      if (isSetMyMap())
+        hashCode = hashCode * 8191 + myMap.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(dumpToBackup_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.valueOf(isSetMyMap()).compareTo(other.isSetMyMap());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetMyMap()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.myMap, other.myMap);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+    }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("dumpToBackup_args(");
+      boolean first = true;
+
+      sb.append("myMap:");
+      if (this.myMap == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.myMap);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class dumpToBackup_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public dumpToBackup_argsStandardScheme getScheme() {
+        return new dumpToBackup_argsStandardScheme();
+      }
+    }
+
+    private static class dumpToBackup_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<dumpToBackup_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, dumpToBackup_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // MY_MAP
+              if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
+                {
+                  org.apache.thrift.protocol.TMap _map0 = iprot.readMapBegin();
+                  struct.myMap = new java.util.HashMap<java.lang.String,MapEntry>(2*_map0.size);
+                  @org.apache.thrift.annotation.Nullable java.lang.String _key1;
+                  @org.apache.thrift.annotation.Nullable MapEntry _val2;
+                  for (int _i3 = 0; _i3 < _map0.size; ++_i3)
+                  {
+                    _key1 = iprot.readString();
+                    _val2 = new MapEntry();
+                    _val2.read(iprot);
+                    struct.myMap.put(_key1, _val2);
+                  }
+                  iprot.readMapEnd();
+                }
+                struct.setMyMapIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, dumpToBackup_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.myMap != null) {
+          oprot.writeFieldBegin(MY_MAP_FIELD_DESC);
+          {
+            oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRUCT, struct.myMap.size()));
+            for (java.util.Map.Entry<java.lang.String, MapEntry> _iter4 : struct.myMap.entrySet())
+            {
+              oprot.writeString(_iter4.getKey());
+              _iter4.getValue().write(oprot);
+            }
+            oprot.writeMapEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class dumpToBackup_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public dumpToBackup_argsTupleScheme getScheme() {
+        return new dumpToBackup_argsTupleScheme();
+      }
+    }
+
+    private static class dumpToBackup_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<dumpToBackup_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, dumpToBackup_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetMyMap()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetMyMap()) {
+          {
+            oprot.writeI32(struct.myMap.size());
+            for (java.util.Map.Entry<java.lang.String, MapEntry> _iter5 : struct.myMap.entrySet())
+            {
+              oprot.writeString(_iter5.getKey());
+              _iter5.getValue().write(oprot);
+            }
+          }
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, dumpToBackup_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          {
+            org.apache.thrift.protocol.TMap _map6 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.myMap = new java.util.HashMap<java.lang.String,MapEntry>(2*_map6.size);
+            @org.apache.thrift.annotation.Nullable java.lang.String _key7;
+            @org.apache.thrift.annotation.Nullable MapEntry _val8;
+            for (int _i9 = 0; _i9 < _map6.size; ++_i9)
+            {
+              _key7 = iprot.readString();
+              _val8 = new MapEntry();
+              _val8.read(iprot);
+              struct.myMap.put(_key7, _val8);
+            }
+          }
+          struct.setMyMapIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class dumpToBackup_result implements org.apache.thrift.TBase<dumpToBackup_result, dumpToBackup_result._Fields>, java.io.Serializable, Cloneable, Comparable<dumpToBackup_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("dumpToBackup_result");
+
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new dumpToBackup_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new dumpToBackup_resultTupleSchemeFactory();
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(dumpToBackup_result.class, metaDataMap);
+    }
+
+    public dumpToBackup_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public dumpToBackup_result(dumpToBackup_result other) {
+    }
+
+    public dumpToBackup_result deepCopy() {
+      return new dumpToBackup_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof dumpToBackup_result)
+        return this.equals((dumpToBackup_result)that);
+      return false;
+    }
+
+    public boolean equals(dumpToBackup_result that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(dumpToBackup_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+      }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("dumpToBackup_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class dumpToBackup_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public dumpToBackup_resultStandardScheme getScheme() {
+        return new dumpToBackup_resultStandardScheme();
+      }
+    }
+
+    private static class dumpToBackup_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<dumpToBackup_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, dumpToBackup_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, dumpToBackup_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class dumpToBackup_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public dumpToBackup_resultTupleScheme getScheme() {
+        return new dumpToBackup_resultTupleScheme();
+      }
+    }
+
+    private static class dumpToBackup_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<dumpToBackup_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, dumpToBackup_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, dumpToBackup_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       }
     }
